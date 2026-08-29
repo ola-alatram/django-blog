@@ -1,0 +1,47 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %} My Blog {% endblock %}</title>
+        <link rel="stylesheet" href="{% static 'blogsApp/css/bootstrap.min.css' %}">
+        <style>
+            .navbar-brand {
+                font-weight: bold;
+            }
+        </style>
+        {% block head %}{% endblock %}
+    </head>
+    <body>
+
+        <!-- شريط التنقل -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}"> Olaf </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="menu">
+                <ul class="navbar-nav me-auto">
+                <li class="nav-item {% if request.path == '/' %}active{% endif %}"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+                <li class="nav-item {% if '/blogs' in request.path %}active{% endif %}"><a class="nav-link" href="{% url 'blogs' %}">Blogs</a></li>
+                <li class="nav-item {% if '/about' in request.path %}active{% endif %}"><a class="nav-link" href="{% url 'about' %}">About</a></li>
+                <li class="nav-item {% if request.path == '/contact/' %}active{% endif %}"><a class="nav-link" href="#">Contact Us</a></li>
+                </ul>
+            </div>
+            </div>
+        </nav>
+        {% block content %} {% endblock %}
+
+        <!-- التذييل -->
+        <footer class="bg-dark text-white text-center py-3">
+            <p class="mb-0">© All Rights Reserved - Olaf Blog</p>
+        </footer>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="{% static 'blogsApp/js/bootstrap.bundle.min.js' %}"></script>
+
+    </body>
+</html>
