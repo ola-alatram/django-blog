@@ -24,6 +24,19 @@
       border-radius: 10px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
+    .blog-category {
+    display: inline-block;
+    margin-right: 6px;
+    margin-bottom: 6px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 14px;
+    text-decoration: none;
+    transition: 0.3s;
+    }
+    .blog-category:hover {
+      transform: translateY(-2px);
+    }
     .comment-box {
       background: #fff;
       padding: 25px;
@@ -35,7 +48,6 @@
 
 {% block content %}
 
-  <!-- صورة وعنوان المدونة -->
   <div class="container my-5">
     <div class="blog-header mb-4">
       <img src="{{blog.image.url}}" alt="Blog Image">
@@ -46,6 +58,19 @@
       <div class="text-muted mb-4">
         <i class="bi bi-calendar"></i> {{blog.date}}
       </div>
+
+      <div class="mb-4">
+
+      {% for category in blog.category.all %}
+
+        <a href="{% url 'blogs_by_category' category.slug %}"
+          class="btn btn-outline-primary blog-category">
+          {{ category.category }}
+        </a>
+
+      {% endfor %}
+
+    </div>
 
       {{blog.content}}
     </div>

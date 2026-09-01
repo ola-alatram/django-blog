@@ -8,6 +8,10 @@ class BlogAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug":("title",)}
 
 
+class CategoryAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"slug":("category",)}
+
+
 admin.site.register(Blog, BlogAdmin)
-admin.site.register(Category)
+admin.site.register(Category, CategoryAdmin)
 

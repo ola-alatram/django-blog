@@ -5,9 +5,17 @@ from django.utils.text import slugify
 # Create your models here.
 class Category (models.Model):
     category = models.CharField(max_length=50)
+    slug = models.SlugField(default="", null=False, db_index=True)
 
     def __str__(self):
         return f"{self.category}"
+
+    def save (self, *args, **kwargs):
+            self.slug = slugify(self.category)
+            super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+            return reverse("blogs_by_category", kwargs={"pk": self.pk})
     
 
 class Blog (models.Model):
@@ -26,6 +34,6 @@ class Blog (models.Model):
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse("blog-page", kwargs={"pk": self.pk})
+        return reverse("blog", kwargs={"pk": self.pk})
 
 

@@ -24,6 +24,22 @@ class BlogsListView (ListView):
     context_object_name = "BlogList"
     ordering = ["-date"]
 
+    def get_queryset(self):
+        queryset = Blog.objects.all()
+
+        category = self.kwargs.get("slug")
+
+        if category:
+            queryset = queryset.filter(category__slug=category)
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+            context = super().get_context_data(**kwargs)
+            context ["categories"] = Category.objects.all()
+            context ["selected_category"] = self.kwargs.get("slug")    
+            return context
+
 
 class BlogDetailsView (DetailView):
     template_name = "blogsApp/Blog_details.html"
