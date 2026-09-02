@@ -42,6 +42,21 @@
   .category-btn:hover {
     transform: translateY(-2px);
   }
+
+  .search-section {
+    max-width: 600px;
+    margin: 0 auto 30px;
+  }
+
+  .search-input {
+      border-radius: 25px 0 0 25px;
+      padding: 10px 18px;
+  }
+
+  .search-btn {
+      border-radius: 0 25px 25px 0;
+      padding: 10px 22px;
+  }
 </style>
 {% endblock %}
 
@@ -50,6 +65,30 @@
 
 <div class="container my-5">
   <h2 class="text-center mb-4">Blogs List</h2>
+
+  <!-- ===== Search Section ===== -->
+  <div class="search-section">
+
+    <form method="GET">
+      <div class="input-group">
+
+        <input
+        type="text"
+        name="q"
+        class="form-control search-input"
+        placeholder="Search blogs..."
+        >
+
+        <button type="submit" class="btn btn-primary search-btn">
+          <i class="bi bi-search"></i> Search
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+  <!-- ===== End Search Section ===== -->
   <div class="categories-section text-center">
 
     <div class="categories-title">

@@ -4,6 +4,7 @@ from blogsApp.models import Blog, Category
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView, Response, status
 from rest_framework.response import Response
+from django.db.models import Q
 
 from blogsApp.serliazers import BlogSerializer 
 
@@ -22,15 +23,18 @@ class BlogsListView (ListView):
     template_name = "blogsApp/blogs_list.html"
     model = Blog
     context_object_name = "BlogList"
-    ordering = ["-date"]
 
     def get_queryset(self):
-        queryset = Blog.objects.all()
+        queryset = Blog.objects.all().order_by("-date")
 
         category = self.kwargs.get("slug")
 
         if category:
             queryset = queryset.filter(category__slug=category)
+
+        q = self.request.GET.get('q')
+        if q:
+            queryset = queryset.filter(Q(title__contains=q) | Q(content__contains=q))
 
         return queryset
 
