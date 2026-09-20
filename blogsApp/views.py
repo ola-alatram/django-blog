@@ -23,6 +23,7 @@ class BlogsListView (ListView):
     template_name = "blogsApp/blogs_list.html"
     model = Blog
     context_object_name = "BlogList"
+    paginate_by = 2
 
     def get_queryset(self):
         queryset = Blog.objects.all().order_by("-date")
@@ -32,9 +33,9 @@ class BlogsListView (ListView):
         if category:
             queryset = queryset.filter(category__slug=category)
 
-        q = self.request.GET.get('q')
-        if q:
-            queryset = queryset.filter(Q(title__contains=q) | Q(content__contains=q))
+        search_text = self.request.GET.get('search_text')
+        if search_text:
+            queryset = queryset.filter(Q(title__contains=search_text) | Q(content__contains=search_text))
 
         return queryset
 

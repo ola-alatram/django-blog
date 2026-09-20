@@ -74,7 +74,7 @@
 
         <input
         type="text"
-        name="q"
+        name="search_text"
         class="form-control search-input"
         placeholder="Search blogs..."
         >
@@ -89,6 +89,8 @@
 
   </div>
   <!-- ===== End Search Section ===== -->
+
+
   <div class="categories-section text-center">
 
     <div class="categories-title">
@@ -139,9 +141,53 @@
     </div>
     {%endfor%}
 
-
-
   </div>
+
+  <nav aria-label="Blog pagination">
+      <ul class="pagination">
+
+          {% if page_obj.has_previous %}
+              <li class="page-item">
+                  <a class="page-link" href="?search_text={{ request.GET.search_text }}&page={{ page_obj.previous_page_number }}">
+                      Previous
+                  </a>
+              </li>
+          {% endif %}
+
+
+          {% for num in page_obj.paginator.page_range %}
+
+              {% if page_obj.number == num %}
+
+                  <li class="page-item active">
+                      <span class="page-link">{{ num }}</span>
+                  </li>
+
+              {% else %}
+
+                <li class="page-item">
+                  <a class="page-link"
+                    href="?search_text={{ request.GET.search_text }}&page={{ num }}">
+                    {{ num }}
+                  </a>
+                </li>
+
+            {% endif %}
+
+          {% endfor %}
+
+
+          {% if page_obj.has_next %}
+              <li class="page-item">
+                  <a class="page-link" href="?search_text={{ request.GET.search_text }}&page={{ page_obj.next_page_number }}">
+                      Next
+                  </a>
+              </li>
+          {% endif %}
+
+      </ul>
+  </nav>
+
 </div>
 
 
