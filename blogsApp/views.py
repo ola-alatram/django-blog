@@ -51,6 +51,20 @@ class BlogDetailsView (DetailView):
     model = Blog
     context_object_name = "blog"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        current_blog = self.object 
+
+        related_blogs = Blog.objects.filter(
+            category__in = current_blog.category.all()
+            ).distinct().exclude(id = current_blog.id
+                      ).order_by("-date")[:3]
+        
+        context ["related_blogs"] = related_blogs
+
+        return context
+
 
 @api_view(['Get'])
 def hello_world (request):
