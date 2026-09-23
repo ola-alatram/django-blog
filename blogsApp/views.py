@@ -1,6 +1,8 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView, ListView, DetailView
-from blogsApp.models import Blog, Category
+from django.urls import reverse_lazy
+from django.views.generic import FormView, TemplateView, ListView, DetailView
+from blogsApp.forms import ContactForm
+from blogsApp.models import Blog, Category, ContactMessage
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView, Response, status
 from rest_framework.response import Response
@@ -65,6 +67,17 @@ class BlogDetailsView (DetailView):
 
         return context
 
+class ContactView (FormView):
+    form_class = ContactForm 
+    template_name = "blogsApp/contact_me.html"
+    success_url = reverse_lazy("contact_success")
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
+
+class ContactSuccessView(TemplateView):
+    template_name = "blogsApp/contact_success.html"
 
 @api_view(['Get'])
 def hello_world (request):

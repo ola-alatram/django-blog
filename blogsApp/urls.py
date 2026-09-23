@@ -6,6 +6,8 @@ from blogsApp import views
 urlpatterns = [
     path ("", views.HomeView.as_view(), name="home"),
     path ("about", views.AboutView.as_view(), name="about"),
+    path ("contact", views.ContactView.as_view(), name="contact"),
+    path ("contact/success", views.ContactSuccessView.as_view(), name="contact_success"),
     path ("blogs/", views.BlogsListView.as_view(), name="blogs"),
     path ("blogs/category/<slug:slug>", views.BlogsListView.as_view(), name="blogs_by_category"),
     path ("blogs/<slug:slug>", views.BlogDetailsView.as_view(), name="blog"),

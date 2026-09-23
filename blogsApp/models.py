@@ -37,3 +37,17 @@ class Blog (models.Model):
         return reverse("blog", kwargs={"pk": self.pk})
 
 
+class ContactMessage (models.Model):
+     name = models.CharField(max_length=200)
+     email = models.EmailField()
+     subject = models.CharField(max_length=300)
+     message = models.TextField()
+     date = models.DateTimeField(auto_now_add=True)
+
+     def str(self):
+          return f"{self.subject}"
+
+     def get_absolute_url(self):
+          return reverse("contact", kwargs={"pk": self.pk})
+
+
